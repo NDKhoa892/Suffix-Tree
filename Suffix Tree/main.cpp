@@ -5,10 +5,16 @@
 //  Created by Harry Nguyen on 14/07/2021.
 //
 
-#include <iostream>
+#include "SuffixTree.h"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main() {
+    string text;
+    cout << "Enter text: ";
+    cin >> text;
+    
+    SuffixTree* suffixTree = new SuffixTree(text);
+    
+    suffixTree -> print();
+    
+    delete suffixTree;
 }
