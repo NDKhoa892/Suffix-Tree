@@ -42,7 +42,7 @@ private:
     Node* lastNewNode;
     
     Node* activeNode;
-    int activeEdge;
+    int activeCharIndex;
     int activeLength;
     
     int remainingSuffixCount;

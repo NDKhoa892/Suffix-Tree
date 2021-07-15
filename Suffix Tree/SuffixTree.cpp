@@ -43,7 +43,7 @@ SuffixTree::SuffixTree(string text) {
     lastNewNode = nullptr;
     
     activeNode = root;
-    activeEdge = -1;
+    activeCharIndex = -1;
     activeLength = 0;
     
     remainingSuffixCount = 0;
@@ -64,7 +64,7 @@ SuffixTree::~SuffixTree() {
 bool SuffixTree::walkDown(Node* curNode) {
     // APCFWD
     if (activeLength >= curNode -> getEdgeLength()) {
-        activeEdge = text[activeEdge + curNode -> getEdgeLength()] - ' ';
+        activeCharIndex += curNode -> getEdgeLength();
         activeLength -= curNode -> getEdgeLength();
         activeNode = curNode;
         
@@ -84,7 +84,9 @@ void SuffixTree::extendSuffixTree(int pos) {
     while (remainingSuffixCount > 0) {
         // APCFALZ
         if (activeLength == 0)
-            activeEdge = text[pos] - ' ';
+            activeCharIndex = pos;
+
+        int activeEdge = text[activeCharIndex] - ' ';
         
         if (activeNode -> children[activeEdge] == nullptr) {
             // Extension Rule 2 (A new leaf edge gets created)
@@ -120,7 +122,7 @@ void SuffixTree::extendSuffixTree(int pos) {
             
             split -> children[text[pos] - ' '] = new Node(root, pos, &leafEnd);
             next -> start += activeLength;
-            split -> children[activeEdge] = next;
+            split -> children[text[next -> start] - ' '] = next;
             
             if (lastNewNode != nullptr)
                 lastNewNode -> suffixLink = split;
